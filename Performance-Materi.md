@@ -62,7 +62,7 @@ Source employee.sql seperti berikut:
 
 **Penjelasan Proses Import:**
 
-> File employee.sql dijalankan
+   - File employee.sql dijalankan
 
 Server mulai mengeksekusi skrip SQL yang ada dalam file tersebut.
 
