@@ -1,6 +1,6 @@
-# **PERFORMANCE**
+# PERFORMANCE
 
-## **LATAR BELAKANG PERMASALAHAN**
+# LATAR BELAKANG PERMASALAHAN
 
 Dalam pengelolaan basis data, performa eksekusi query menjadi faktor penting yang mempengaruhi efisiensi sistem. Salah satu cara meningkatkan performa adalah dengan penggunaan teknik optimasi seperti indeks, partisi tabel, dan strategi eksekusi query yang efisien. Indeks memungkinkan database untuk mengambil data lebih cepat dibandingkan dengan pemindaian tabel penuh, sementara partisi tabel dapat mengurangi beban pemrosesan dengan membagi data ke dalam segmen yang lebih kecil.
 
@@ -8,7 +8,7 @@ Laporan ini membahas berbagai teknik optimasi performa database, termasuk penggu
 
 ----------------------------------------------------------------------------
 
-## **PROBLEM YANG DIANGKAT**
+## PROBLEM YANG DIANGKAT
 
 Berdasarkan masalah utama yang dapat diangkat dalam laporan ini:  
 
@@ -19,20 +19,20 @@ Berdasarkan masalah utama yang dapat diangkat dalam laporan ini:
 
 ----------------------------------------------------------------------------
 
-## **SOLUSI / SKENARIO AKTIVITAS**
-**1. 
-Import data**
+# SOLUSI / SKENARIO AKTIVITAS
+**1. Import data**
 
 Lakukan import data dengan Langkah sebagai berikut:
 
 - a.	Download dan extrak dataset employe pada folder
 - b.	Masuk konsol dos, sehingga tampil seperti berikut:
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/fc3e6bf5-05f7-4a36-b79c-43251cbb54a7)
 
 **Penjelasan:**
 
-**Masuk ke Direktori XAMPP**
+Masuk ke Direktori XAMPP
 
 - Awalnya, pengguna berada di direktori c:\xampp, yang merupakan folder tempat XAMPP terinstal.
 
@@ -58,6 +58,7 @@ Lakukan import data dengan Langkah sebagai berikut:
 - d.	Lakukan import data dengan menggunakan script berikut:
 Source employee.sql seperti berikut:
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/3fbd72c3-7c9d-4b97-8e58-c11a0a58e3c2)
 
 **Penjelasan Proses Import:**
@@ -73,6 +74,7 @@ Pengguna berhasil mengimpor database employee ke dalam MySQL/MariaDB. Struktur d
 - e.	Tunggu sampai selesai.
 - f.	Setelah selesai, maka nanti pada database, akan tampak sebagai berikut:
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/55ebd177-f9f6-481f-910f-29237e6ac1a2)
 
 ----------------------------------------------------------------------------
@@ -83,6 +85,7 @@ Pengguna berhasil mengimpor database employee ke dalam MySQL/MariaDB. Struktur d
 SELECT * FROM employee
 ```
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/53530713-eb80-426b-8a94-7b59962d0da2)
 
 **Penjelasan:**
@@ -96,6 +99,7 @@ EXPLAIN SELECT * FROM employee
 WHERE first_name = 'Georgi'
 ```
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/68242c0c-f5c9-4414-93b8-57d8d1d40d86)
 
 **Penjelasan:**
@@ -108,6 +112,7 @@ Fungsinya untuk menganalisis cara MySQL mengeksekusi perintah pencarian data ber
 ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name)
 ```
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/7cf969f7-1a76-4de8-b3dd-665f7b2952ce)
 
 **Penjelasan:**
@@ -122,27 +127,29 @@ WHERE first_name = 'Georgi'
 AND last_name = 'Bahr'
 ```
 
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/a36721aa-31f5-463d-86c8-820c4046c72a)
 
 **Penjelasan:**
 
 Fungsinya untuk menganalisis performa pencarian data setelah penambahan indeks komposit. Sebelumnya, pencarian dilakukan dengan **full table scan**, yang menyebabkan pemrosesan ratusan ribu baris. Setelah menambahkan indeks komposit `idx_full_name` pada kolom `first_name` dan `last_name` menggunakan query `ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);`, MySQL kini dapat menggunakan indeks untuk pencarian yang lebih efisien. Hasil `EXPLAIN` menunjukkan bahwa MySQL menggunakan indeks (`type: ref`), dengan jumlah baris yang diproses turun drastis menjadi **1 baris**, dibandingkan dengan pencarian sebelumnya. Kolom `Extra` menyatakan **Using index condition**, yang berarti MySQL memanfaatkan indeks dalam penyaringan data sebelum mengambilnya dari tabel. 
 
-Sekarang bisa kita lihat bahwa query yang kita jalankan tidak lagi scaning penuh ketabel, melainkan akses pada index. Ini terlihat pada nilai kolom key dan possible_keys.
+# Sekarang bisa kita lihat bahwa query yang kita jalankan tidak lagi scaning penuh ketabel, melainkan akses pada index. Ini terlihat pada nilai kolom key dan possible_keys.
 
 ----------------------------------------------------------------------------
 
-## LATIHAN SOAL
+# LATIHAN SOAL
 
-### 1. Lakukan semua tahapan di atas, dan jalankan pada database Anda. Tambahkan screenshot hasil dari setiap langkah yang Anda lakukan.
+1. Lakukan semua tahapan di atas, dan jalankan pada database Anda. Tambahkan screenshot hasil dari setiap langkah yang Anda lakukan.
 
-### 2. Tambahkan kolom nama departemen pada tabel `dept_manager` dan lakukan update terhadap kolom tersebut. Tambahkan screenshot hasilnya.
+2. Tambahkan kolom nama departemen pada tabel `dept_manager` dan lakukan update terhadap kolom tersebut. Tambahkan screenshot hasilnya.
 
-#### JAWABAN
+# JAWABAN
 **Query 1: Tambahkan Kolom Baru**
 ```sql
 ALTER TABLE dept_manager ADD COLUMN dept_name VARCHAR(255);
 ```
+
 **Hasil 1:**
 ![image](https://github.com/user-attachments/assets/db311d99-7b81-42e8-8dd7-a48c19934405)
 
@@ -155,6 +162,7 @@ UPDATE dept_manager dm
 JOIN department d ON dm.dept_no = d.dept_no
 SET dm.dept_name = d.dept_name;
 ```
+
 **Hasil 2:**
 ![image](https://github.com/user-attachments/assets/30541f00-7d0d-4960-b886-efdebad7bb28)
 
@@ -165,6 +173,7 @@ Query ini memperbarui kolom `dept_name` dalam tabel `dept_manager` dengan mengis
 ```sql
 SELECT * FROM dept_manager;
 ```
+
 **Hasil 3:**
 ![image](https://github.com/user-attachments/assets/a1080370-6b48-4484-b4fe-ddfe024072b5)
 
@@ -172,13 +181,15 @@ SELECT * FROM dept_manager;
 Query ini digunakan untuk memverifikasi apakah kolom `dept_name` telah berhasil ditambahkan dan diperbarui. Data yang ditampilkan menunjukkan bahwa setiap manager kini memiliki nama departemen yang sesuai dengan `dept_no`.
 
 ---
-### 3. Tambahkan kolom nama departemen pada tabel `dept_emp`. Dan lakukan update terhadap kolom tersebut. Tambahkan screenshot hasilnya.
 
-#### JAWABAN
+3. Tambahkan kolom nama departemen pada tabel `dept_emp`. Dan lakukan update terhadap kolom tersebut. Tambahkan screenshot hasilnya.
+
+# JAWABAN
 **Query 1: Tambahkan Kolom `nama_departemen`**
 ```sql
 ALTER TABLE dept_emp ADD COLUMN nama_departemen VARCHAR(100);
 ```
+
 **Hasil 1:**
 ![image](https://github.com/user-attachments/assets/46c5f4f1-165b-4a5e-ab6b-a13e59a9fe4a)
 
@@ -191,6 +202,7 @@ UPDATE dept_emp
 JOIN department ON dept_emp.dept_no = department.dept_no
 SET dept_emp.nama_departemen = department.dept_name;
 ```
+
 **Hasil 2:**
 ![image](https://github.com/user-attachments/assets/53efa3c8-ca91-4816-b2df-764390cf6d09)
 
@@ -202,13 +214,15 @@ Query ini memperbarui kolom `nama_departemen` dengan mengisi nilainya dari tabel
 SELECT * FROM dept_emp;
 SELECT * FROM dept_emp LIMIT 10;
 ```
+
 **Hasil 3:**
 ![image](https://github.com/user-attachments/assets/287cf5b8-c635-4065-9903-7494c4626856)
 
 ---
-### 4. Buat query untuk menampilkan gaji yang tertinggi pada departemen `d006`. Siapa Namanya?
 
-#### JAWABAN
+4. Buat query untuk menampilkan gaji yang tertinggi pada departemen `d006`. Siapa Namanya?
+
+# JAWABAN
 **Query:**
 ```sql
 SELECT e.first_name, e.last_name, s.amount
@@ -219,6 +233,7 @@ WHERE d.dept_no = 'd006'
 ORDER BY s.amount DESC
 LIMIT 1;
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/56d079f5-006a-42e0-b034-c9aa86a12c2a)
 
@@ -226,13 +241,14 @@ LIMIT 1;
 Query ini mencari karyawan dengan gaji tertinggi di departemen `d006`. Data diambil dengan melakukan `JOIN` antara tabel `employee`, `salary`, dan `dept_emp`, lalu difilter berdasarkan `dept_no` dan diurutkan secara descending berdasarkan jumlah gaji.
 
 ---
-### 5. Dari database employee yang sudah diimport, tambahkan kolom umur pada tabel `employee`.
+5. Dari database employee yang sudah diimport, tambahkan kolom umur pada tabel `employee`.
 
-#### JAWABAN
+# JAWABAN
 **Query 1: Menambahkan Kolom `umur`**
 ```sql
 ALTER TABLE employee ADD COLUMN umur INT;
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/0fd4e2e8-9700-4fa5-8b4e-1b7c75b23594)
 
@@ -240,17 +256,20 @@ ALTER TABLE employee ADD COLUMN umur INT;
 ```sql
 UPDATE employee SET umur = YEAR(CURDATE()) - YEAR(birth_date);
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/88d2f487-e893-447f-b581-b25aef6d40c5)
 
 ---
-### 6. Tambahkan masing-masing jenis index composite dan foreign key index pada tabel `employee`.
 
-#### JAWABAN
+6. Tambahkan masing-masing jenis index composite dan foreign key index pada tabel `employee`.
+
+# JAWABAN
 **Query 1: Tambahkan Composite Index**
 ```sql
 ALTER TABLE employee ADD INDEX idx_nama (first_name, last_name);
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/bfdbc4f0-2f9a-44bf-8c6b-053852163c0f)
 
@@ -258,29 +277,31 @@ ALTER TABLE employee ADD INDEX idx_nama (first_name, last_name);
 ```sql
 ALTER TABLE dept_emp ADD CONSTRAINT fk_emp FOREIGN KEY (emp_no) REFERENCES employee(emp_no);
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/53ce1a12-bede-4407-a010-e2f3d8415760)
 
 ---
-### 7. Lakukan pengujian terhadap query berikut, apakah sudah mengakses index atau belum.
+7. Lakukan pengujian terhadap query berikut, apakah sudah mengakses index atau belum.
 
-#### JAWABAN
+#JAWABAN
 **Query:**
 ```sql
 EXPLAIN SELECT * FROM employee WHERE first_name = 'Georgi';
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/2d1b26c7-5ea2-4ba1-b195-88c165eeebc6)
 
-
 ---
-### 8. Lakukan pengujian dari query berikut. Apakah ada perbedaan sebelum dan sesudah ditambahkan index.
+8. Lakukan pengujian dari query berikut. Apakah ada perbedaan sebelum dan sesudah ditambahkan index.
 
-#### JAWABAN
+# JAWABAN
 **Query Uji:**
 ```sql
 SELECT * FROM employee WHERE first_name = 'Georgi' AND last_name = 'Bahr';
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/8c659078-26ae-4600-b6a5-6ad8577958cb)
 
@@ -288,6 +309,7 @@ SELECT * FROM employee WHERE first_name = 'Georgi' AND last_name = 'Bahr';
 ```sql
 ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 ```
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/f3bb41bc-1905-437c-9311-512296dc4622)
 
@@ -350,7 +372,10 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 ----------------------------------------------------------------------------
 
 ## Sumber Referensi
-
+- https://mand-ycmm.org/index.php/jilkom/article/view/397
+- https://mand-ycmm.org/index.php/jilkom/article/view/397
+- https://www.ad-ins.com/id/our-story/kisah-adins/manajemen-basis-data/
+- https://jursistekni.nusaputra.ac.id/article/view/345
 
 
 
