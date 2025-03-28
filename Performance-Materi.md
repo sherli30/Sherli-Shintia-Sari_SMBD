@@ -1,6 +1,6 @@
 # **PERFORMANCE**
 
-## **LATAR BELAKANG**
+## **LATAR BELAKANG PERMASALAHAN**
 
 Dalam pengelolaan basis data, performa eksekusi query menjadi faktor penting yang mempengaruhi efisiensi sistem. Salah satu cara meningkatkan performa adalah dengan penggunaan teknik optimasi seperti indeks, partisi tabel, dan strategi eksekusi query yang efisien. Indeks memungkinkan database untuk mengambil data lebih cepat dibandingkan dengan pemindaian tabel penuh, sementara partisi tabel dapat mengurangi beban pemrosesan dengan membagi data ke dalam segmen yang lebih kecil.
 
@@ -347,6 +347,9 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 - **Penggunaan EXPLAIN sangat berguna** untuk menganalisis efektivitas indeks dalam query pencarian.
   
 - **Pemilihan indeks harus mempertimbangkan kebutuhan dan struktur data**, agar tidak menyebabkan overhead yang tidak perlu.  
+----------------------------------------------------------------------------
+
+## Sumber Referensi
 
 
 
