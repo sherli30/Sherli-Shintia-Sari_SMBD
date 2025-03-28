@@ -79,7 +79,8 @@ Pengguna berhasil mengimpor database employee ke dalam MySQL/MariaDB. Struktur d
 
 **1.	Jalankan query :**
 
-SELECT * FROM employee
+```SELECT * FROM employee
+```
 
 ![image](https://github.com/user-attachments/assets/53530713-eb80-426b-8a94-7b59962d0da2)
 
@@ -89,8 +90,9 @@ Fungsinya untuk mengambil seluruh data dari tabel `employee`, yang berisi inform
 
 **2.	Jalankan query explain :**
    
-EXPLAIN SELECT * FROM employee
+```EXPLAIN SELECT * FROM employee 
 WHERE first_name = 'Georgi'
+```
 
 ![image](https://github.com/user-attachments/assets/68242c0c-f5c9-4414-93b8-57d8d1d40d86)
 
@@ -100,7 +102,8 @@ Fungsinya untuk menganalisis cara MySQL mengeksekusi perintah pencarian data ber
 
 **3.	Tambahkan index**
 
-ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name)
+```ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name)
+```
 
 ![image](https://github.com/user-attachments/assets/7cf969f7-1a76-4de8-b3dd-665f7b2952ce)
 
@@ -110,10 +113,10 @@ FUngsinya untuk menambahkan indeks komposit (idx_full_name) pada kolom first_nam
 
 **4.	Lakukan query exlain lagi untuk query diatas :**
    
-EXPLAIN SELECT * FROM employee
+```EXPLAIN SELECT * FROM employee
 WHERE first_name = 'Georgi'
 AND last_name = 'Bahr'
-
+```
 
 ![image](https://github.com/user-attachments/assets/a36721aa-31f5-463d-86c8-820c4046c72a)
 
