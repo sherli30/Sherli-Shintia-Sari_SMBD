@@ -12,35 +12,29 @@ Permasalahan utama dalam dokumen ini adalah bagaimana mengoptimalkan performa da
 
 ### Solusi/Skenario Aktivitas (Soal yang Dikerjakan)
 
-Berikut adalah file dalam format Markdown (`.md`) berdasarkan teks yang kamu berikan. Kamu bisa menyalinnya ke file `README.md` atau file lain di repositori GitHub.  
+## Optimasi Query dengan Partisi Tabel di MySQL
 
----
-
-### **Optimasi Query dengan Partisi Tabel di MySQL**
-
-## **1. Skenario Sebelum Partisi**
+**1. Skenario Sebelum Partisi**
 Misalkan kita memiliki tabel transaksi (`transactions`) dengan 10 juta baris. Saat melakukan query seperti:
 
-### **Query:**
+**Query:**
 ```sql
 SELECT * FROM transactions 
 WHERE transaction_date BETWEEN '2023-01-01' AND '2023-12-31';
 ```
 
-### **Penjelasan:**  
+**Penjelasan:**  
 Query ini mengambil semua data dari tabel `transactions` dengan transaksi yang terjadi antara **1 Januari 2023** sampai **31 Desember 2023**.
 
-### **Hasil:**  
+**Hasil:**  
 ![image](https://github.com/user-attachments/assets/55703353-d1de-493b-8a61-4f89297bbc3d)
-
-Karena tidak ada partisi, MySQL harus memeriksa seluruh tabel, yang bisa sangat lambat.
 
 ---
 
-## **2. Skenario Setelah Partisi**
+**2. Skenario Setelah Partisi**
 Sekarang kita membagi tabel `transactions` berdasarkan tahun menggunakan **RANGE PARTITION**:
 
-### **Query:**
+**Query:**
 ```sql
 CREATE TABLE transactions (
     id INT NOT NULL AUTO_INCREMENT,
@@ -58,14 +52,15 @@ PARTITION BY RANGE (YEAR(transaction_date)) (
 );
 ```
 
-### **Penjelasan:**  
+**Penjelasan:**  
 Struktur tabel ini mempercepat pencarian data berdasarkan **tahun transaksi** dengan menggunakan partisi.
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/39a0d209-db1a-44fa-8a48-f138e7f0b8cc)
 
 ---
 
-## **3. Memasukkan Data ke Tabel yang Dipartisi**
-### **Query:**
+**3. Memasukkan Data ke Tabel yang Dipartisi**
+**Query:**
 ```sql
 INSERT INTO transactions (transaction_date, amount, customer_id) VALUES
 ('2023-03-01', 500000, 1),
@@ -73,17 +68,19 @@ INSERT INTO transactions (transaction_date, amount, customer_id) VALUES
 ('2022-07-10', 200000, 3);
 ```
 
-### **Query Mengecek Jumlah Data**
+**Query Mengecek Jumlah Data**
 ```sql
 SELECT COUNT(*) FROM transactions;
 ```
 
 Jika tabel sebelumnya kosong, hasilnya adalah `3`. Jika sudah ada data sebelumnya, hasilnya adalah jumlah total transaksi yang ada.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/1018b4d7-07d9-43a2-9d56-9b8e96cd3f60)
 
 ---
 
-## **4. Mengecek Partisi yang Digunakan**
+**4. Mengecek Partisi yang Digunakan**
 ```sql
 SELECT TABLE_NAME, PARTITION_NAME, TABLE_ROWS
 FROM INFORMATION_SCHEMA.PARTITIONS
@@ -91,22 +88,26 @@ WHERE TABLE_NAME = 'transactions';
 ```
 
 Jika `transactions` menggunakan partisi, query ini akan menampilkan daftar partisi beserta jumlah datanya. Jika tabel tidak dipartisi, hasilnya kosong.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/6d627e9b-1a22-4353-88cb-6fe8cd6da17f)
 
 ---
 
-## **5. Optimasi Query dengan Partisi**
+**5. Optimasi Query dengan Partisi**
 ```sql
 SELECT * FROM transactions 
 WHERE transaction_date BETWEEN '2023-01-01' AND '2023-12-31';
 ```
 
 **Keuntungan**: MySQL hanya akan mencari di **partisi p3** (data tahun 2023), bukan seluruh tabel, sehingga query menjadi jauh lebih cepat.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/03792672-25c5-4bcd-8d52-8229edfaf38f)
 
 ---
 
-## **6. Manfaat Partisi Tabel**
+**6. Manfaat Partisi Tabel**
 1. **Meningkatkan Performa Query**  
    → Dengan hanya mencari di partisi yang relevan, waktu eksekusi query berkurang signifikan.
 2. **Mempermudah Manajemen Data**  
@@ -120,13 +121,13 @@ WHERE transaction_date BETWEEN '2023-01-01' AND '2023-12-31';
 
 ---
 
-## **7. List Partition dalam MySQL**
+**7. List Partition dalam MySQL**
 List Partition digunakan untuk membagi tabel berdasarkan **nilai tertentu** pada suatu kolom, seperti kode wilayah.
 
-### **Studi Kasus: Partisi Data Transaksi Berdasarkan Wilayah**
+**Studi Kasus: Partisi Data Transaksi Berdasarkan Wilayah**
 Misalkan kita memiliki tabel `transactions1` yang menyimpan transaksi berdasarkan kode wilayah (`region_id`).
 
-### **Membuat Tabel dengan List Partition**
+**Membuat Tabel dengan List Partition**
 ```sql
 CREATE TABLE transactions1 (
     id INT NOT NULL AUTO_INCREMENT,
@@ -142,16 +143,15 @@ PARTITION BY LIST (region_id) (
     PARTITION p_other VALUES IN (4,5,6,7)
 );
 ```
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/fd198256-0f3f-4dd5-a924-92bd4b502c6a)
 
 ---
-Berikut adalah file dalam format Markdown (`.md`) yang bisa langsung kamu unggah ke GitHub:  
 
----
-```
-# **LIST PARTITION PADA PARTISI TABEL DALAM MYSQL**
+## **LIST PARTITION PADA PARTISI TABEL DALAM MYSQL**
 
-## **1. Pengertian List Partition**
+**1. Pengertian List Partition**
 List Partition adalah metode partisi di MySQL yang digunakan untuk membagi tabel berdasarkan **nilai tertentu pada suatu kolom**. Biasanya digunakan ketika data memiliki **kategori diskrit**, seperti:
 - **Kode wilayah**
 - **Tipe produk**
@@ -159,10 +159,10 @@ List Partition adalah metode partisi di MySQL yang digunakan untuk membagi tabel
 
 ---
 
-## **2. Studi Kasus: Partisi Data Transaksi Berdasarkan Kode Wilayah**
+**2. Studi Kasus: Partisi Data Transaksi Berdasarkan Kode Wilayah**
 Misalkan kita memiliki database yang menyimpan transaksi keuangan, dan kita ingin membagi data transaksi berdasarkan **wilayah (`region_id`)**.
 
-### **Struktur Tabel**
+**Struktur Tabel**
 Tabel `transactions1` memiliki kolom:
 - `id` → **ID transaksi** (Primary Key)
 - `transaction_date` → **Tanggal transaksi**
@@ -174,7 +174,7 @@ Kita akan membuat **partisi berdasarkan wilayah** menggunakan **List Partition**
 
 ---
 
-## **3. Membuat Tabel dengan List Partition**
+**3. Membuat Tabel dengan List Partition**
 ```sql
 CREATE TABLE transactions1 (
     id INT NOT NULL AUTO_INCREMENT,
@@ -191,13 +191,14 @@ PARTITION BY LIST (region_id) (
 );
 ```
 
-### **Hasil:**
 Tabel `transactions1` berhasil dibuat dengan partisi berdasarkan **kode wilayah**.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/f648c707-b1cd-412b-b92d-35b4cabca6a3)
 
 ---
 
-## **4. Menambahkan Data ke Tabel**
+**4. Menambahkan Data ke Tabel**
 ```sql
 INSERT INTO transactions1 (transaction_date, amount, region_id) VALUES 
 ('2024-03-01', 500000, 1),  -- Jakarta (p_jakarta)
@@ -207,42 +208,41 @@ INSERT INTO transactions1 (transaction_date, amount, region_id) VALUES
 ('2024-03-05', 450000, 6);  -- Wilayah Lainnya (p_other)
 ```
 
-### **Hasil:**
 Data transaksi berhasil dimasukkan ke dalam **partisi yang sesuai berdasarkan region_id**.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/2478a219-41eb-42f5-8c70-4e1db554c694)
 
 ---
 
-## **5. Mengecek Partisi yang Digunakan**
+**5. Mengecek Partisi yang Digunakan**
 ```sql
 SELECT TABLE_NAME, PARTITION_NAME, TABLE_ROWS 
 FROM INFORMATION_SCHEMA.PARTITIONS
 WHERE TABLE_NAME = 'transactions1';
 ```
-
-### **Hasil:**
 Query ini akan menampilkan daftar **partisi beserta jumlah baris data dalam masing-masing partisi**.
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/974e66c7-a7e3-48e1-9175-2e31a6859618)
 
 ---
 
-## **6. Menjalankan Query dengan Optimasi Partisi**
+**6. Menjalankan Query dengan Optimasi Partisi**
 ```sql
 SELECT * FROM transactions1 
 WHERE region_id = 2;
 ```
-
-### **Hasil:**
+**Hasil:**
 Query ini hanya mencari di **partisi `p_surabaya`**, bukan di seluruh tabel.
 ![image](https://github.com/user-attachments/assets/e3149ca6-9fe3-4414-94c4-79f058244fd0)
 
-### **Keuntungan:**
+**Keuntungan:**
 ✅ **MySQL hanya mencari di partisi `p_surabaya` (lebih cepat).**  
 ✅ **Tidak perlu melakukan full table scan pada semua data.**
 
 ---
 
-## **7. Menambahkan Partisi Baru**
+**7. Menambahkan Partisi Baru**
 Jika kita ingin menambahkan wilayah baru, misalnya `region_id = 8` untuk **Semarang**, kita bisa menambahkan partisi baru:
 
 ```sql
@@ -250,47 +250,43 @@ ALTER TABLE transactions1
 ADD PARTITION (PARTITION p_semarang VALUES IN (8));
 ```
 
-### **Hasil:**
 Partisi baru `p_semarang` berhasil ditambahkan.
 ![image](https://github.com/user-attachments/assets/037aa2e4-4222-4a22-ad1b-08bb2360dc00)
 
 ---
 
-## **8. Menghapus Partisi Lama**
+**8. Menghapus Partisi Lama**
 Jika kita ingin **menghapus partisi untuk wilayah yang sudah tidak digunakan**, misalnya **p_bandung**, kita bisa menggunakan perintah berikut:
 
 ```sql
 ALTER TABLE transactions1
 DROP PARTITION p_bandung;
 ```
-
-### **Hasil:**
 - **Semua data dalam partisi `p_bandung` akan dihapus!**
 - **Pastikan tidak ada data penting sebelum menjalankan perintah ini.**
 ![image](https://github.com/user-attachments/assets/6014f8e5-cf6a-4304-a48c-0b617a54c360)
 
 ---
 
-## **9. Kesimpulan**
+**9. Kesimpulan**
 ✅ **List Partition sangat efektif untuk data dengan kategori tetap** seperti **wilayah, jenis produk, atau status pelanggan**.  
 ✅ **Mempercepat pencarian data**, karena MySQL hanya membaca **partisi yang relevan**.  
 ✅ **Mempermudah manajemen data**, karena kita bisa **menambahkan atau menghapus partisi tanpa mempengaruhi data lain**.  
 ✅ **Cocok untuk database dengan skala besar**, karena meminimalkan penggunaan indeks global dan mempercepat proses query.  
 
-Berikut adalah file dalam format Markdown (`.md`) yang bisa Anda gunakan untuk dokumentasi di GitHub.  
-
 ---
 
 ## **LATIHAN STUDI KASUS - PARTISI TABEL PADA DATABASE MINIMARKET**
 
-### **1. Konsep dan Pemahaman**
+**1. Konsep dan Pemahaman**
 - Menjalankan contoh script untuk memahami konsep partisi, cara kerja partisi, dan manfaatnya.
 - Studi kasus mengacu pada database minimarket.
 
 ---
 
-### **2. Redesain Tabel `tr_penjualan` dengan Partisi**
-#### **Membuat Tabel `tr_penjualan_partisi`**
+**2. Redesain Tabel `tr_penjualan` dengan Partisi**
+
+**Membuat Tabel `tr_penjualan_partisi`**
 ```sql
 CREATE TABLE tr_penjualan_partisi ( 
     tgl_transaksi DATETIME DEFAULT NULL,
@@ -313,76 +309,234 @@ PARTITION BY RANGE (YEAR(tgl_transaksi)) (
     PARTITION p7 VALUES LESS THAN (2015)
 );
 ```
+
 **Penjelasan:**  
 Meningkatkan efisiensi pencarian data transaksi berdasarkan tahun dengan sistem partisi.
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/1ef4f2d2-6c07-4948-9cac-fbde07eae6ee)
 
-#### **Menambahkan Kolom pada `tr_penjualan`**
+**Menambahkan Kolom pada `tr_penjualan`**
 ```sql
 ALTER TABLE tr_penjualan ADD COLUMN nama_kasir VARCHAR(255);
 ALTER TABLE tr_penjualan ADD COLUMN harga INT(6);
 ```
+
 **Penjelasan:**  
 •	Query ini memindahkan data dari tabel tr_penjualan ke tabel tr_penjualan_partisi.
 •	Query ini digunakan untuk memperbarui struktur tabel agar bisa menyimpan nama kasir dan harga barang dalam transaksi penjualan.
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/8f1bb733-ccd4-4c7f-928e-ae74e798eb02)
 
 ---
 
-### **3. Memasukkan Data ke `tr_penjualan_partisi`**
-#### **Script Insert Data**
+
+**3. Memasukkan Data ke `tr_penjualan_partisi`**
+
+**Script Insert Data**
 ```sql
 INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga) 
 SELECT tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
 FROM tr_penjualan;
 ```
+
 **Penjelasan:**  
-•	Query ini memindahkan data dari tr_penjualan ke tr_penjualan_partisi, tetapi dengan menambah 1 tahun pada kolom tgl_transaksi.
-•	Query ini digunakan untuk memigrasikan data dari tabel lama (tanpa partisi) ke tabel baru (dengan partisi berdasarkan tahun tgl_transaksi).
+- Query ini memindahkan data dari tr_penjualan ke tr_penjualan_partisi, tetapi dengan menambah 1 tahun pada kolom tgl_transaksi.
+- Query ini digunakan untuk memigrasikan data dari tabel lama (tanpa partisi) ke tabel baru (dengan partisi berdasarkan tahun tgl_transaksi).
+
+**Hasil :**
 ![image](https://github.com/user-attachments/assets/7f700373-ad98-4f3a-a358-684f66cd38e6)
 
-#### **Menambah Tahun ke Data Transaksi**
+**Menambah Tahun ke Data Transaksi**
+
+## Script insert utk tahun 2009
 ```sql
 INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
 SELECT DATE_ADD(tgl_transaksi, INTERVAL 1 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
 FROM tr_penjualan;
 ```
-**Penjelasan:**  
-Menambahkan 1 tahun pada setiap transaksi sebelum dimasukkan ke tabel `tr_penjualan_partisi`.
 
-#### **Menambahkan Partisi Baru untuk Tahun 2016**
+**Penjelasan:**  
+•	DATE_ADD(tgl_transaksi, INTERVAL 1 YEAR) → Menambahkan 1 tahun pada setiap transaksi sebelum dimasukkan ke tabel baru.
+•	Data lain seperti kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, dan harga tetap sama.
+•	INSERT INTO ... SELECT ... FROM tr_penjualan → Memindahkan data dari tr_penjualan ke tr_penjualan_partisi dengan tanggal transaksi yang diperbarui.
+•	Query ini memasukkan data dari tabel tr_penjualan ke dalam tabel tr_penjualan_partisi, tetapi dengan menambahkan 1 tahun pada nilai kolom tgl_transaksi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/07501d98-cc2e-4667-9e24-0b0497d0e36a)
+
+#### Script insert utk tahun 2010
+```
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 2 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+```
+
+**Penjelasan :**
+- Query ini memasukkan data dari tabel tr_penjualan ke dalam tabel tr_penjualan_partisi, tetapi dengan menambahkan 2 tahun pada nilai kolom tgl_transaksi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/5dd19a8f-862f-4712-8ef6-d92d5e175bd3)
+
+#### Script insert utk tahun 2011
+```
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 3 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+```
+
+**Penjelasan :**
+- Query ini memasukkan data dari tabel tr_penjualan ke dalam tabel tr_penjualan_partisi, tetapi dengan menambahkan 3 tahun pada nilai kolom tgl_transaksi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/aead747c-383c-4df4-bfe3-4e026e7f587e)
+
+### Script insert utk tahun 2012
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 4 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+
+**Penjelasan :**
+Query ini memasukkan data dari tr_penjualan ke dalam tr_penjualan_partisi, tetapi dengan menambahkan 4 tahun pada kolom tgl_transaksi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/67140da3-a6c6-4791-8ffb-193dee1311c5)
+
+### Script insert utk tahun 2013
+```
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 5 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+```
+
+**Penjelasan :**
+Query ini menyalin data dari tr_penjualan ke dalam tr_penjualan_partisi, tetapi dengan menambahkan 5 tahun pada kolom tgl_transaksi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/996daed9-925f-4eb4-a11f-9f946ff6331d)
+
+### Script insert utk tahun 2014
+```
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 6 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+```
+
+**Penjelasan :**
+•	Query ini menyalin data dari tabel tr_penjualan ke tabel tr_penjualan_partisi, tetapi dengan menambahkan 6 tahun pada kolom tgl_transaksi.
+•	DATE_ADD(tgl_transaksi, INTERVAL 6 YEAR) → Menambah 6 tahun pada tanggal transaksi.
+•	Kolom lain tetap sama (kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga).
+•	Data hasil perubahan disalin ke tr_penjualan_partisi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/a29e5f9a-6a78-490f-97af-cf3238c6bc9e)
+
+### **Menambahkan Partisi Baru untuk Tahun 2016**
 ```sql
 ALTER TABLE tr_penjualan_partisi 
 ADD PARTITION (PARTITION p8 VALUES LESS THAN (2016));
 ```
+
 **Penjelasan:**  
-Menambahkan partisi baru untuk menyimpan data transaksi sebelum tahun 2016.
+•	Query ini menambahkan partisi baru pada tabel tr_penjualan_partisi untuk menyimpan data transaksi sebelum tahun 2016.
+•	ALTER TABLE tr_penjualan_partisi → Mengubah struktur tabel.
+•	ADD PARTITION (PARTITION p8 VALUES LESS THAN (2016)) → Menambahkan partisi baru (p8) untuk transaksi sebelum tahun 2016.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/352f8e0c-8026-46b7-bb27-99b712c656e2)
+
+### Script insert utk tahun 2015
+```
+INSERT INTO tr_penjualan_partisi (tgl_transaksi, kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga)
+SELECT DATE_ADD(tgl_transaksi, INTERVAL 7 YEAR), kode_cabang, kode_kasir, kode_item, kode_produk, jumlah_pembelian, nama_kasir, harga
+FROM tr_penjualan;
+```
+
+**Penjelasan :**
+•	Query ini memindahkan data transaksi dari tabel tr_penjualan ke tabel tr_penjualan_partisi, tetapi dengan menambahkan 7 tahun pada tanggal transaksi.
+•	INSERT INTO tr_penjualan_partisi (...) → Memasukkan data ke tabel partisi.
+•	SELECT DATE_ADD(tgl_transaksi, INTERVAL 7 YEAR), ... FROM tr_penjualan → Mengambil data dari tr_penjualan, lalu menambah 7 tahun pada setiap tanggal transaksi sebelum memasukkannya ke tabel partisi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/a34af869-bd5f-4725-ba57-5e9cf22a793e)
 
 ---
 
-### **4. Mengecek Data dalam Partisi**
-```sql
-SELECT TABLE_NAME, PARTITION_NAME, TABLE_ROWS 
-FROM INFORMATION_SCHEMA.PARTITIONS
+c.	Pengisian tabel tr_penjualan_partisi disesuai dengan kapasitas LAPTOP masing- masing. Makin banyak data, makin terlihat efek dari partisi table.
+d.	Setelah diisikan, maka susunan record sesuai partisi akan ditampilkan seperti berikut:
+
+**Query :**
+```
+SELECT TABLE_NAME, PARTITION_NAME, TABLE_ROWS FROM INFORMATION_SCHEMA.PARTITIONS
 WHERE TABLE_NAME = 'tr_penjualan_partisi';
 ```
-**Penjelasan:**  
-Mengecek distribusi data di dalam partisi.
+
+**Penjelasan :**
+•	Query ini berguna untuk mengecek apakah data sudah terdistribusi ke partisi yang benar serta mengetahui jumlah data dalam masing-masing partisi.
+•	engambil data dari INFORMATION_SCHEMA.PARTITIONS, yaitu metadata partisi dalam database.
+•	Menyaring hanya tabel tr_penjualan_partisi dengan klausa WHERE TABLE_NAME = 'tr_penjualan_partisi'.
+•	Menampilkan kolom-kolom berikut:
+1.	TABLE_NAME → Nama tabel.
+2.	PARTITION_NAME → Nama partisi.
+3.	TABLE_ROWS → Perkiraan jumlah baris dalam setiap partisi.
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/1516df36-3fb1-47b3-8b70-320bfb0c3f3e)
 
 ---
 
-### **5. Membuat Tabel `tr_penjualan_raw` (Tanpa Partisi)**
-```sql
+### 4.	Buat tabel tr_penjualan_raw yang isinya sama persis dengan tabel tr_penjualan_partisi. Yang membedakan hanya struktur tabel nya saja.
+- Tr_penjualan_raw = struktur biasa 
+- Tr_penjualan_partisi = struktur tabel ter partisi
+
+**Query :**
+```
 CREATE TABLE tr_penjualan_raw AS
 SELECT * FROM tr_penjualan_partisi;
 ```
-**Penjelasan:**  
-Membuat tabel tanpa partisi (`tr_penjualan_raw`) yang isinya sama dengan `tr_penjualan_partisi`.
+
+**Penjelasan :**
+•	Membuat tabel baru tr_penjualan_raw berdasarkan struktur dan data dari tr_penjualan_partisi.
+•	Semua data dari tr_penjualan_partisi akan disalin ke dalam tr_penjualan_raw.
+•	Tidak termasuk partisi (tabel baru ini tidak memiliki partisi, meskipun tabel asalnya memiliki partisi).
+
+**Hasil :**
+![image](https://github.com/user-attachments/assets/15fdcea6-afb2-4013-aa3b-04b9eb53398b)
 
 ---
 
-### **6. Pengujian Performa Query**
-#### **Query dengan `tgl_transaksi`**
+### 5.	Pengujian tabel
+
+Jalankan query berikut dengan perulangan 10x. lakukan pencatatan waktu running setiap query. Dan ambil rata-ratanya.
+
+**Query :**
+```
+SELECT * FROM tr_penjualan_raw
+WHERE tgl_transaksi > DATE('2010-08-01') AND tgl_transaksi < DATE('2011-07-31')
+```
+
+**Penjelasan :**
+•	Memilih semua kolom dari tabel tr_penjualan_raw.
+•	Menyaring data berdasarkan tanggal transaksi (tgl_transaksi):
+    1.	Harus lebih besar dari 1 Agustus 2010.
+    2.	Harus lebih kecil dari 31 Juli 2011.
+•	Query ini digunakan untuk menampilkan transaksi dalam periode 1 tahun, yaitu dari Agustus 2010 hingga Juli 2011.
+
+# Tabel Pengujian RAW dan PARTISI :
+No	Waktu tr_penjualan_raw	Waktu tr_penjualan_partisi
+1	0.097 sec	0.347 sec
+2	0.093 sec	0.646 sec
+3	0.094 sec	0.690 sec
+4	0.091 sec	0.656 sec
+5	0.086 sec	0.714 sec
+6	0.094 sec	0.626 sec
+7	0.090 sec	0.622 sec
+8	0.085 sec	0.727 sec
+9	0.106 sec	0.722 sec
+10	0.088 sec	0.705 sec
+Rata-rata	0.0924 sec	0.6455 sec
+
+
+**Query dengan `tgl_transaksi`**
 ```sql
 SELECT * FROM tr_penjualan_raw
 WHERE tgl_transaksi > DATE('2010-08-01') AND tgl_transaksi < DATE('2011-07-31');
