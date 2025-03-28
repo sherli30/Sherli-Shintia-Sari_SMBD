@@ -6,6 +6,8 @@ Dalam pengelolaan basis data, performa eksekusi query menjadi faktor penting yan
 
 Laporan ini membahas berbagai teknik optimasi performa database, termasuk penggunaan indeks dan partisi tabel, serta analisis terhadap dampaknya terhadap kecepatan eksekusi query. Dengan implementasi yang tepat, optimasi ini dapat meningkatkan efisiensi pengelolaan data dan mengurangi waktu respons sistem, sehingga mendukung kinerja aplikasi yang lebih baik.
 
+----------------------------------------------------------------------------
+
 **PROBLEM YANG DIANGKAT**
 
 Berdasarkan masalah utama yang dapat diangkat dalam laporan ini:  
@@ -17,6 +19,8 @@ Berdasarkan masalah utama yang dapat diangkat dalam laporan ini:
 3. Bagaimana pengaruh indeks terhadap kecepatan eksekusi query dalam basis data besar? 
 
 4. Bagaimana penggunaan indeks composite dan foreign key dapat membantu optimalisasi pencarian data?
+
+----------------------------------------------------------------------------
 
 **SOLUSI / SKENARIO AKTIVITAS**
 **1. 
@@ -124,6 +128,43 @@ AND last_name = 'Bahr'
 Fungsinya untuk menganalisis performa pencarian data setelah penambahan indeks komposit. Sebelumnya, pencarian dilakukan dengan **full table scan**, yang menyebabkan pemrosesan ratusan ribu baris. Setelah menambahkan indeks komposit `idx_full_name` pada kolom `first_name` dan `last_name` menggunakan query `ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);`, MySQL kini dapat menggunakan indeks untuk pencarian yang lebih efisien. Hasil `EXPLAIN` menunjukkan bahwa MySQL menggunakan indeks (`type: ref`), dengan jumlah baris yang diproses turun drastis menjadi **1 baris**, dibandingkan dengan pencarian sebelumnya. Kolom `Extra` menyatakan **Using index condition**, yang berarti MySQL memanfaatkan indeks dalam penyaringan data sebelum mengambilnya dari tabel. 
 
 Sekarang bisa kita lihat bahwa query yang kita jalankan tidak lagi scaning penuh ketabel, melainkan akses pada index. Ini terlihat pada nilai kolom key dan possible_keys.
+
+----------------------------------------------------------------------------
+
+**PEMBAHASAN**
+
+1. **Penambahan Kolom**
+
+   - Kolom `dept_name` ditambahkan pada tabel `dept_manager` dan `dept_emp` untuk mencantumkan nama departemen.  
+   - Kolom `umur` ditambahkan pada tabel `employee` untuk menyimpan usia karyawan, yang dihitung berdasarkan selisih antara tahun saat ini dan tahun lahir.  
+
+3. **Update Data**
+   
+   - Kolom `dept_name` dan `nama_departemen` diisi dengan data dari tabel `department` menggunakan operasi `JOIN`.  
+   - Kolom `umur` diperbarui dengan selisih tahun antara tanggal lahir (`birth_date`) dan tanggal saat ini (`CURDATE()`).  
+
+5. **Pembuatan dan Pengujian Indeks**
+   
+   - **Composite Index** ditambahkan pada tabel `employee` dengan indeks `idx_full_name` untuk kolom `first_name` dan `last_name`.  
+   - **Foreign Key Index** dibuat di tabel `dept_emp`, menghubungkan `emp_no` ke tabel `employee`.  
+   - **Pengujian Query dengan EXPLAIN** menunjukkan bahwa indeks digunakan dalam pencarian karyawan berdasarkan nama depan dan belakang.  
+
+7. **Uji Performa Query**
+   
+   - Query pencarian data karyawan sebelum dan sesudah indeks dibuat dibandingkan.  
+   - Hasilnya menunjukkan bahwa rata-rata waktu eksekusi sebelum indeks (0.0011 detik) lebih cepat dibandingkan setelah indeks (0.0022 detik), karena tabel masih kecil dan overhead dari indeks menambah sedikit waktu pencarian.  
+
+----------------------------------------------------------------------------
+
+**KESIMPULAN**
+
+- **Indeks tidak selalu meningkatkan performa query jika ukuran tabel masih kecil**, karena MySQL dapat mencari data secara langsung tanpa indeks dengan cepat.
+   
+- **Indeks lebih efektif untuk tabel besar** yang memiliki banyak data, karena dapat mempercepat pencarian secara signifikan.
+  
+- **Penggunaan EXPLAIN sangat berguna** untuk menganalisis efektivitas indeks dalam query pencarian.
+  
+- **Pemilihan indeks harus mempertimbangkan kebutuhan dan struktur data**, agar tidak menyebabkan overhead yang tidak perlu.  
 
 
 
