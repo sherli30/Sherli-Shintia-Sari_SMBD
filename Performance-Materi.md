@@ -117,7 +117,7 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name)
 
 **Penjelasan:**
 
-FUngsinya untuk menambahkan indeks komposit (idx_full_name) pada kolom first_name dan last_name dalam tabel employee. Indeks ini akan mempercepat pencarian data berdasarkan kombinasi kedua kolom tersebut, terutama untuk query dengan kondisi WHERE first_name = '...' AND last_name = '...'. Proses eksekusi memakan waktu 1.255 detik, menunjukkan bahwa indeks berhasil dibuat tanpa error atau peringatan.
+Fungsinya untuk menambahkan indeks komposit (idx_full_name) pada kolom first_name dan last_name dalam tabel employee. Indeks ini akan mempercepat pencarian data berdasarkan kombinasi kedua kolom tersebut, terutama untuk query dengan kondisi WHERE first_name = '...' AND last_name = '...'. Proses eksekusi memakan waktu 1.255 detik, menunjukkan bahwa indeks berhasil dibuat tanpa error atau peringatan.
 
 **4.	Lakukan query exlain lagi untuk query diatas :**
    
@@ -241,6 +241,7 @@ LIMIT 1;
 Query ini mencari karyawan dengan gaji tertinggi di departemen `d006`. Data diambil dengan melakukan `JOIN` antara tabel `employee`, `salary`, dan `dept_emp`, lalu difilter berdasarkan `dept_no` dan diurutkan secara descending berdasarkan jumlah gaji.
 
 ---
+
 5. Dari database employee yang sudah diimport, tambahkan kolom umur pada tabel `employee`.
 
 # JAWABAN
@@ -249,6 +250,10 @@ Query ini mencari karyawan dengan gaji tertinggi di departemen `d006`. Data diam
 ALTER TABLE employee ADD COLUMN umur INT;
 ```
 
+**Penjelasan 1 :**
+Untuk menambahkan kolom umur bertipe INT ke dalam tabel employee menggunakan perintah ALTER TABLE.
+
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/0fd4e2e8-9700-4fa5-8b4e-1b7c75b23594)
 
@@ -256,6 +261,9 @@ ALTER TABLE employee ADD COLUMN umur INT;
 ```sql
 UPDATE employee SET umur = YEAR(CURDATE()) - YEAR(birth_date);
 ```
+
+**Penjelasan 2 :**
+Untuk memperbarui kolom umur di tabel employee berdasarkan perhitungan selisih tahun antara tanggal saat ini (CURDATE()) dan birth_date.
 
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/88d2f487-e893-447f-b581-b25aef6d40c5)
@@ -270,6 +278,9 @@ UPDATE employee SET umur = YEAR(CURDATE()) - YEAR(birth_date);
 ALTER TABLE employee ADD INDEX idx_nama (first_name, last_name);
 ```
 
+**Penjelasan 1 :**
+Untuk menambahkan indeks idx_nama pada kolom first_name dan last_name di tabel employee. Indeks berhasil ditambahkan tanpa error, tetapi ada 1 peringatan (warning). Waktu eksekusi sekitar 1.101 detik.
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/bfdbc4f0-2f9a-44bf-8c6b-053852163c0f)
 
@@ -278,22 +289,30 @@ ALTER TABLE employee ADD INDEX idx_nama (first_name, last_name);
 ALTER TABLE dept_emp ADD CONSTRAINT fk_emp FOREIGN KEY (emp_no) REFERENCES employee(emp_no);
 ```
 
+**Penjelasan 2 :**
+Kolom emp_no di tabel dept_emp kini memiliki foreign key yang merujuk ke kolom emp_no di tabel employee, memastikan integritas data antar tabel.
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/53ce1a12-bede-4407-a010-e2f3d8415760)
 
 ---
+
 7. Lakukan pengujian terhadap query berikut, apakah sudah mengakses index atau belum.
 
-#JAWABAN
+# JAWABAN
 **Query:**
 ```sql
 EXPLAIN SELECT * FROM employee WHERE first_name = 'Georgi';
 ```
 
+**Penjelasan :**
+Query menggunakan indeks idx_full_name untuk pencarian, dengan panjang kunci 58 dan memfilter sekitar 253 baris, sehingga optimasi indeks digunakan untuk mempercepat pencarian.
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/2d1b26c7-5ea2-4ba1-b195-88c165eeebc6)
 
 ---
+
 8. Lakukan pengujian dari query berikut. Apakah ada perbedaan sebelum dan sesudah ditambahkan index.
 
 # JAWABAN
@@ -302,8 +321,26 @@ EXPLAIN SELECT * FROM employee WHERE first_name = 'Georgi';
 SELECT * FROM employee WHERE first_name = 'Georgi' AND last_name = 'Bahr';
 ```
 
+**Penjelasan :**
+query SQL pada database yang mencari karyawan dengan nama depan "Georgi" dan nama belakang "Bahr" dalam tabel employee. Hasilnya menampilkan satu baris data dengan informasi berikut:
+•	emp_no: 36825
+•	birth_date: 13 Oktober 1963
+•	first_name: Georgi
+•	last_name: Bahr
+•	gender: M (Male/Laki-laki)
+•	hire_date: 30 Oktober 1988
+•	umur: 62 tahun
+
 **Hasil:**
 ![image](https://github.com/user-attachments/assets/8c659078-26ae-4600-b6a5-6ad8577958cb)
+
+---
+
+**Cara menguji**
+•	Jalankan query diatas sebanyak 10x. catet waktunya setiap kali dijalankan
+•	Buat index composite yang bersesuaian dengan query diatas.
+•	Ambil rata2 sebelum dan sesudah
+•	Tulis kesimpulanya.
 
 **Query Index:**
 ```sql
@@ -329,10 +366,23 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 | 10 | 0.002 sec    | 0.002 sec    |
 | **Rata-rata** | **0.0011 sec** | **0.0022 sec** |
 
-**Kesimpulan:**
-- Rata-rata waktu sebelum indeks: 0.0011 sec
-- Rata-rata waktu setelah indeks: 0.0022 sec
-- Indeks lebih efektif untuk tabel besar, namun pada tabel kecil bisa menambah sedikit overhead.
+---
+
+**Kesimpulan Pengujian Index pada Query SQL**
+Dari hasil pengujian, waktu eksekusi sebelum dan sesudah menambahkan indeks composite pada kolom first_name dan last_name menunjukkan perbedaan sebagai berikut:
+•	Rata-rata waktu sebelum indeks: 0.0011 sec
+•	Rata-rata waktu setelah indeks: 0.0022 sec
+Berdasarkan data tersebut, waktu eksekusi setelah menambahkan indeks justru sedikit lebih lambat dibandingkan sebelum indeks.
+
+**Analisis Penyebab**
+•	Ukuran tabel masih kecil → Jika tabel employee belum memiliki banyak data, MySQL dapat dengan cepat mencari data tanpa perlu menggunakan indeks. Indeks lebih efektif jika tabel berisi jutaan baris data.
+•	MySQL Query Optimizer → MySQL mungkin sudah cukup efisien dalam mencari data tanpa indeks dalam kasus ini, sehingga menambahkan indeks justru menambah sedikit overhead dalam pencarian.
+•	Overhead dari indeks → Saat menambahkan indeks baru, MySQL perlu mengelola struktur tambahan, yang dapat menyebabkan sedikit penurunan performa pada tabel yang kecil.
+
+**Kesimpulan Akhir**
+•	Jika tabel memiliki sedikit data, penggunaan indeks tidak selalu meningkatkan performa dan dalam beberapa kasus justru bisa menambah sedikit overhead.
+•	Indeks lebih berguna untuk tabel besar, terutama ketika query sering dijalankan dengan kondisi pencarian pada kolom yang telah diindeks.
+•	Disarankan untuk menggunakan EXPLAIN pada query untuk melihat bagaimana MySQL mengeksekusi pencarian dengan dan tanpa indeks.
 
 ----------------------------------------------------------------------------
 ## **PEMBAHASAN**
@@ -360,7 +410,7 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 
 ----------------------------------------------------------------------------
 
-## **KESIMPULAN**
+## **KESIMPULAN SECARA KESELURUHAN**
 
 - **Indeks tidak selalu meningkatkan performa query jika ukuran tabel masih kecil**, karena MySQL dapat mencari data secara langsung tanpa indeks dengan cepat.
    
