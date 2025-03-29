@@ -369,20 +369,19 @@ ALTER TABLE employee ADD INDEX idx_full_name (first_name, last_name);
 ---
 
 **Kesimpulan Pengujian Index pada Query SQL**
-Dari hasil pengujian, waktu eksekusi sebelum dan sesudah menambahkan indeks composite pada kolom first_name dan last_name menunjukkan perbedaan sebagai berikut:
-•	Rata-rata waktu sebelum indeks: 0.0011 sec
-•	Rata-rata waktu setelah indeks: 0.0022 sec
-Berdasarkan data tersebut, waktu eksekusi setelah menambahkan indeks justru sedikit lebih lambat dibandingkan sebelum indeks.
+- Data menunjukkan rata-rata waktu eksekusi sebelum indeks (0.0011 detik) memang lebih cepat dibandingkan setelah indeks (0.0022 detik)
+- Kesimpulan bahwa penambahan indeks justru membuat query sedikit lebih lambat adalah akurat berdasarkan hasil pengujian yang dilakukan
 
 **Analisis Penyebab**
 •	Ukuran tabel masih kecil → Jika tabel employee belum memiliki banyak data, MySQL dapat dengan cepat mencari data tanpa perlu menggunakan indeks. Indeks lebih efektif jika tabel berisi jutaan baris data.
 •	MySQL Query Optimizer → MySQL mungkin sudah cukup efisien dalam mencari data tanpa indeks dalam kasus ini, sehingga menambahkan indeks justru menambah sedikit overhead dalam pencarian.
 •	Overhead dari indeks → Saat menambahkan indeks baru, MySQL perlu mengelola struktur tambahan, yang dapat menyebabkan sedikit penurunan performa pada tabel yang kecil.
 
-**Kesimpulan Akhir**
-•	Jika tabel memiliki sedikit data, penggunaan indeks tidak selalu meningkatkan performa dan dalam beberapa kasus justru bisa menambah sedikit overhead.
-•	Indeks lebih berguna untuk tabel besar, terutama ketika query sering dijalankan dengan kondisi pencarian pada kolom yang telah diindeks.
-•	Disarankan untuk menggunakan EXPLAIN pada query untuk melihat bagaimana MySQL mengeksekusi pencarian dengan dan tanpa indeks.
+**Kesimpulan Akhir Pengujian**
+- Kesimpulan bahwa indeks tidak selalu meningkatkan performa pada tabel kecil sesuai dengan hasil yang diperoleh
+- Pernyataan bahwa indeks lebih berguna untuk tabel besar juga benar dan merupakan prinsip dasar dalam optimasi database
+- Saran untuk menggunakan EXPLAIN juga tepat sebagai praktik terbaik dalam analisis query
+- Semua kesimpulan tersebut sudah sejalan dengan data yang ditampilkan dalam tabel hasil pengujian dan mencerminkan pemahaman yang benar tentang perilaku indeks dalam database MySQL/MariaDB.
 
 ----------------------------------------------------------------------------
 ## **PEMBAHASAN**
@@ -409,30 +408,36 @@ Berdasarkan data tersebut, waktu eksekusi setelah menambahkan indeks justru sedi
    - Hasilnya menunjukkan bahwa rata-rata waktu eksekusi sebelum indeks (0.0011 detik) lebih cepat dibandingkan setelah indeks (0.0022 detik), karena tabel masih kecil dan overhead dari indeks menambah sedikit waktu pencarian.  
 
 ----------------------------------------------------------------------------
+# KESIMPULAN SECARA KESELURUHAN
 
-## **KESIMPULAN SECARA KESELURUHAN**
+1. **Penggunaan Indeks dalam Database:**
+   - Indeks mempercepat pencarian data dengan mengurangi jumlah baris yang perlu diproses, terutama pada tabel berukuran besar
+   - Tanpa indeks, MySQL melakukan full table scan yang memproses seluruh isi tabel
+   - Indeks komposit pada kolom first_name dan last_name meningkatkan efisiensi untuk pencarian berdasarkan kedua kolom tersebut
+   - Pada tabel kecil, penambahan indeks tidak selalu meningkatkan performa dan kadang justru menambah overhead
 
-- **Indeks tidak selalu meningkatkan performa query jika ukuran tabel masih kecil**, karena MySQL dapat mencari data secara langsung tanpa indeks dengan cepat.
-   
-- **Indeks lebih efektif untuk tabel besar** yang memiliki banyak data, karena dapat mempercepat pencarian secara signifikan.
-  
-- **Penggunaan EXPLAIN sangat berguna** untuk menganalisis efektivitas indeks dalam query pencarian.
-  
-- **Pemilihan indeks harus mempertimbangkan kebutuhan dan struktur data**, agar tidak menyebabkan overhead yang tidak perlu.  
-----------------------------------------------------------------------------
+2. **Manipulasi Struktur Tabel:**
+   - Kolom baru dapat ditambahkan menggunakan perintah ALTER TABLE
+   - Relasi antar tabel dapat dibuat dengan JOIN dan foreign key constraint untuk menjaga integritas data
+   - Operasi UPDATE dengan JOIN memungkinkan pembaruan data berdasarkan nilai dari tabel lain
 
-## Sumber Referensi
-- https://mand-ycmm.org/index.php/jilkom/article/view/397
-- https://mand-ycmm.org/index.php/jilkom/article/view/397
-- https://www.ad-ins.com/id/our-story/kisah-adins/manajemen-basis-data/
-- https://jursistekni.nusaputra.ac.id/article/view/345
+3. **Analisis Performa Query:**
+   - Perintah EXPLAIN berguna untuk menganalisis cara MySQL mengeksekusi query
+   - Perbedaan antara full table scan (type: ALL) dan penggunaan indeks (type: ref) signifikan dalam jumlah baris yang diproses
+   - Pengoptimalan query penting untuk meningkatkan kinerja database, terutama saat data bertambah besar
 
+4. **Pengujian Empiris:**
+   - Pengujian performa query sebelum dan sesudah penambahan indeks penting untuk mengevaluasi efektivitas indeks
+   - Pada kasus tertentu dengan data kecil, overhead dari indeks dapat mengurangi performa keseluruhan
 
+---
 
+# REFERENSI
 
-
-
-
-
-
-
+1. MySQL Documentation - Indexing: https://dev.mysql.com/doc/refman/8.0/en/optimization-indexes.html
+2. MariaDB Documentation: https://mariadb.com/kb/en/getting-started-with-indexes/
+3. Database Performance Tuning Guide: https://use-the-index-luke.com/
+4. SQL Performance Explained: Understanding and Using Indexes - Markus Winand
+5. MySQL: Composite Indexes vs. Multiple Single Indexes: https://www.percona.com/blog/mysql-indexes-part-1-the-basics/
+6. Understanding EXPLAIN in MySQL: https://dev.mysql.com/doc/refman/8.0/en/explain-output.html
+7. Database Indexing Strategies: https://www.dataversity.net/database-indexing-strategies/
