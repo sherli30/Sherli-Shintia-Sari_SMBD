@@ -20,6 +20,7 @@ Praktikum ini bertujuan untuk memberikan pemahaman mendalam tentang cara melakuk
 ---
 
 # SOLUSI/SKENARIO AKTIVITAS
+
 # Tugas praktikum
 1.	Lakukan proses pembuatan username sebanyak jumlah kelompok anda. Tuliskan script dan tampilkan hasilnya.
 2.	Lakukan penghapusan username terhadap user yang sudah dibuat. Tuliskan script dan tampilkan hasilnya
@@ -41,59 +42,121 @@ Praktikum ini bertujuan untuk memberikan pemahaman mendalam tentang cara melakuk
 1.	Proses Pembuatan username ke dalam SQL yog sebanyak 3 kali denagn menggunakan scripst sebagai berikut:
 
 -	Membuat tiga user baru dalam database MySQL dengan nama chalimatus, safira, dan sherli, masing-masing hanya dapat mengakses dari localhost.
--	Code : CREATE USER 'chalimatus'@'localhost' IDENTIFIED BY 'chalimatus'; dengan output sebagai berikut.
+**> Query :**
+```
+CREATE USER 'chalimatus'@'localhost' IDENTIFIED BY 'chalimatus';
+```
+
+**> Penjelasan :**
 -	Output run yaitu 1 querie, 1 succes tanpa adanya error.
 
-**Hasil:**
+**> Hasil:**
 ![image](https://github.com/user-attachments/assets/d181fc39-d87e-452e-be60-4bc100a2f90a)
 
 ----
 
--	CREATE USER 'safira'@'localhost' IDENTIFIED BY 'safira'; dengan output sebagai berikut. Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+**> Query :**
+```
+CREATE USER 'safira'@'localhost' IDENTIFIED BY 'safira';
+```
+
+**> Penjelasan :**
+
+Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/96b1547d-e1d0-4bfe-a108-f6678bcfdf43)
 
 ----
 
--	CREATE USER 'sherli'@'localhost' IDENTIFIED BY 'sherli'; dengan output sebagai berikut. Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+**> Query :**
+```
+CREATE USER 'sherli'@'localhost' IDENTIFIED BY 'sherli';
+```
+
+**> Penjelasan :**
+
+Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/e244cf99-3b26-470d-ae28-0ec8d35ad1df)
 
 ----
 
--	Menampilkan daftar user beserta host yang diizinkan untuk mengakses database.
--	Code : SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli'); dengan output sebaga berikut.
--	Output menghasilkan 3 users dengan host yaitu localhost
+#	Menampilkan daftar user beserta host yang diizinkan untuk mengakses database.
+
+**> Query :**
+```
+SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli'); 
+```
+
+**> Penjelasan :**
+
+Output menghasilkan 3 users dengan host yaitu localhost
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/4b8c5595-c543-40c8-9d66-610250f6f8f3)
 
 ----
 
 2.	Proses penghapusan username terhadap user yang sudah dibuat., dengan menggunakan script sebagai berikut:
--	Menghapus user sherli dari MySQL.
--	Code : DROP USER 'sherli'@'localhost'; dengan output sebaga beriku.
+# Menghapus user sherli dari MySQL.
+
+**> Query :**
+```
+DROP USER 'sherli'@'localhost'; 
+```
+
+**> Penjelasan :**
+
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/53ddd1f3-0fa7-4747-81a6-c8b16eb5c22c)
 
 ----
 
--	Mengecek kembali daftar user yang masih ada setelah penghapusan user sherli.
--	Code : SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli'); engan output sebagai berikut.
+# Mengecek kembali daftar user yang masih ada setelah penghapusan user sherli.
+
+**> Query :**
+```
+SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli');
+```
+
+**> Penjelasan :**
 -	Output menghasilkan 3 users dengan host yaitu localhost
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/16a90a05-a682-4930-b97d-efa913b7763f)
 
 ----
 
 3.	Role dengan menggunakan “role_nama_anda_insert_se  role_andi_select_insert kemudian menghasilkan output:
 
--	Membuat role bernama role_chalimatus_insert_select.
--	Code : CREATE ROLE 'role_chalimatus_insert_select';
+# Membuat role bernama role_chalimatus_insert_select.
+
+**> Query :**
+```
+CREATE ROLE 'role_chalimatus_insert_select';
+```
+
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/0a1afa24-62d5-4fdc-b8ac-327c5d116047)
 
 ----
 
 4.	Berikan privilege select, insert kedalam role diatas
 
--	Memberikan izin SELECT dan INSERT pada seluruh tabel di database_example untuk role role_chalimatus_insert_select.
--	Code : GRANT SELECT, INSERT ON database_example.* TO 'role_chalimatus_insert_select';dengan output sebagai berikut:
+# Memberikan izin SELECT dan INSERT pada seluruh tabel di database_example untuk role role_chalimatus_insert_select.
+
+**> Query :**
+```
+GRANT SELECT, INSERT ON database_example.* TO 'role_chalimatus_insert_select';
+```
+
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
 ![image](https://github.com/user-attachments/assets/e995a9e0-8c66-4160-a6bf-41a78c1fa657)
 
