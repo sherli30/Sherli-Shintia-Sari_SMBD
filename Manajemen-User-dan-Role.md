@@ -7,7 +7,7 @@ Seiring perkembangan, MySQL kini telah mendukung konsep role yang memudahkan adm
 
 Praktikum ini bertujuan untuk memberikan pemahaman mendalam tentang cara melakukan manajemen akun pengguna, pengaturan privilege, penerapan role, serta monitoring aktivitas pada sistem basis data MySQL. Melalui kegiatan ini, diharapkan peserta mampu mengelola keamanan dan akses pengguna dengan efektif.
 
----
+--- 
 
 # PROBLEM YANG DIANGKAT
 - a. Bagaimana cara membuat, menghapus, dan mengelola akun pengguna dalam MySQL, termasuk penerapan otentikasi?
