@@ -63,7 +63,7 @@ Database unrelational (NoSQL) menyimpan data tanpa struktur tabel tetap, cocok u
 - Pilih navbar “Downloads” pada MySQL
 ![image](https://github.com/user-attachments/assets/c9b693e1-1211-434e-9b54-802fa034880f)
 
---
+---
 
 - Scroll kebawah, klik link “MySQL Community (GPL) Downloads >>” 
 ![image](https://github.com/user-attachments/assets/bd7e413f-ae5a-449d-a08f-b8e059df5f02)
@@ -73,205 +73,205 @@ Database unrelational (NoSQL) menyimpan data tanpa struktur tabel tetap, cocok u
 -  Klik link “MySQL Installer for Windows”
 ![image](https://github.com/user-attachments/assets/72f11d99-9373-4439-a349-3909fec4b20c)
 
---
+---
 
 - Klik tanda “Download” pada “Windows (x86, 32-bit), MSI Installer”, untuk version apk menyesuaikan versi terbaru
 ![image](https://github.com/user-attachments/assets/72951a5b-6b19-47bc-8740-155f8e0bd74f)
 
---
+---
 
 -  instalasi “mysql” dengan versi yang sudah di setting sudah selesai
 
 - Klik link "No thanks, just start my download"
 ![image](https://github.com/user-attachments/assets/4c27abe9-c5a7-4dc0-be9d-720de1ec822e)
 
---
+---
 
 - Secara otomatis akan langsung terdownload dan berada di Folder "Download"
 ![image](https://github.com/user-attachments/assets/c3a9b9e8-cca0-4149-ac8b-17f45bf639c7)
 
---
+---
 
 -  Buka Folder dengan apk MySQL yang sudah di download, lalu klik “Open”
   ![image](https://github.com/user-attachments/assets/6ca9ed93-a3e9-4104-b00b-8aa504765acf)
 
---
+---
 
 -  Notifikasi untuk menunggu Configures MySQL Installer pada windows
 ![image](https://github.com/user-attachments/assets/83ea38c9-2c43-4eae-9940-1258078e1493)
 
---
+---
 
 -  Klik “Yes” untuk installer apk mysql community version 8.0.41 pada “User
 Account Control”
 ![image](https://github.com/user-attachments/assets/4dade162-5ca3-488c-84ce-019af39393ee)
 
---
+---
 
 - Notifikasi proses untuk Installer MySQL
 ![image](https://github.com/user-attachments/assets/30e597c4-42c9-45b1-bea4-4e1d388bb615)
 
---
+---
 
 - Klik “Yes” untuk Installer Launcher MySQL pada “User Account Control”
 ![image](https://github.com/user-attachments/assets/0469b4a5-2bb8-4918-a02a-0636656927f7)
 
---
+---
 
 - Untuk memvalidasi internet untuk connection pada “MySQL.Installer 1.6”
 ![image](https://github.com/user-attachments/assets/3a5aff57-9f5c-492c-86ad-1a95c35f16e5)
 
---
+---
 
 - Halaman awal pada apk MySQL. Installer, yaitu memiih “Setup Type pada use case” dengan pilihan default yaitu “Server Only”, lalu klik tombol “next”
 ![Screenshot 2025-03-29 111112](https://github.com/user-attachments/assets/0fe9d0b0-3aa1-4559-83ee-6de0396ae370)
 
---
+---
 
 - MySQL Installer pada tahap "Path Conflicts", yang mengindikasikan adanya konflik instalasi karena direktori tujuan sudah digunakan oleh versi MySQL Server 8.0.41.
    - Pengguna dapat memilih untuk tetap menggunakan direktori yang sama atau mengubahnya untuk menghindari konflik. Lalu klik tombol "next"
 ![image](https://github.com/user-attachments/assets/790f9a91-5f58-4c86-ae4a-0bd93c46e053)
 
---
+---
 
 - Tampilan instalasi MySQL Server 8.0.41 menggunakan MySQL Installer.
    - Statusnya "Ready to Install", dan pengguna dapat menekan tombol **Execute** untuk memulai proses instalasi.
 ![Screenshot 2025-03-29 111525](https://github.com/user-attachments/assets/29c5cee8-0009-4c64-9de8-dca3399c79bd)
 
---
+---
 
 - Instalasi **MySQL Server 8.0.41** telah selesai dengan status **Complete**.
    - Pengguna dapat melanjutkan ke langkah berikutnya dengan menekan tombol **Next**.
 ![Screenshot 2025-03-29 111617](https://github.com/user-attachments/assets/69a9f24f-12d9-4f59-ba9a-9f2cabb27ebe)
 
---
+---
 
 - **Product Configuration** dalam instalasi **MySQL Server 8.0.41**. Statusnya **Ready to configure**, dan pengguna dapat menekan tombol **Next** untuk memulai proses konfigurasi.
 ![Screenshot 2025-03-29 111638](https://github.com/user-attachments/assets/0c94dc04-cedd-4ff7-a72f-8b76f6cdd88c)
 
---
+---
 
 - Konfigurasi **Type and Networking** untuk **MySQL Server 8.0.41**, dengan mode **Development Computer** dan **TCP/IP (Port 3306)** diaktifkan.
    - Pengguna dapat melanjutkan dengan menekan **Next**.
 ![Screenshot 2025-03-29 111724](https://github.com/user-attachments/assets/469566e6-fc08-4da9-8217-da4c2ca3f742)
 
---
+---
 
 - **Authentication Method** dalam konfigurasi **MySQL Server 8.0.41**. Opsi yang direkomendasikan adalah **Strong Password Encryption (SHA256)** untuk keamanan lebih baik.
    - Pengguna dapat melanjutkan dengan menekan **Next**.
 ![Screenshot 2025-03-29 115250](https://github.com/user-attachments/assets/bc952333-6ecf-4382-be76-5aef28a0feb2)
 
---
+---
 
 - Root Account Password telah diatur, tetapi kekuatannya masih Weak (lemah). Sebaiknya gunakan kata sandi yang lebih kuat. Belum ada MySQL User Accounts yang ditambahkan.
    - Pengguna dapat menambahkan akun dengan mengklik Add User. Untuk melanjutkan, tekan Next.
 ![Screenshot 2025-03-29 115325](https://github.com/user-attachments/assets/abc4ce96-8162-4a5c-8e9d-63091ed471e8)
 
---
+---
 
 - **MySQL Server dikonfigurasi sebagai Windows Service** dengan nama **MySQL80**. **Opsi "Start the MySQL Server at System Startup" dicentang**, yang berarti MySQL akan otomatis berjalan saat Windows dinyalakan.
    - **Menggunakan "Standard System Account"**, yang direkomendasikan untuk sebagian besar skenario. Untuk melanjutkan, tekan **Next**.
 ![Screenshot 2025-03-29 115349](https://github.com/user-attachments/assets/4a1558c2-7662-4e01-a59d-07fb11e81879)
 
---
+---
 
 - Direktori data MySQL terletak di **C:\ProgramData\MySQL\MySQL Server 8.0\Data**. Opsi yang dipilih: **Memberikan akses penuh hanya kepada pengguna Windows Service dan administrator** untuk meningkatkan keamanan.
    - Opsi lain memungkinkan pengaturan akses manual, tetapi tidak dipilih. Untuk melanjutkan, tekan **Next**.
 ![Screenshot 2025-03-29 115403](https://github.com/user-attachments/assets/2b0ef302-91e5-4bb3-8161-fa335188ebf0)
 
---
+---
 
 - Apply Configuration dalam instalasi MySQL Server 8.0.41.
 - Beberapa konfigurasi akan diterapkan, seperti menulis file konfigurasi, memperbarui firewall, menginisialisasi database, dan memulai server.
 - Klik Execute untuk menjalankan proses konfigurasi.
 ![Screenshot 2025-03-29 115415](https://github.com/user-attachments/assets/efca388f-367b-49aa-92e7-87b358e9f8b5)
 
---
+---
 
 - Konfigurasi MySQL Server 8.0.41 telah berhasil diselesaikan.
    - Semua langkah, termasuk menulis file konfigurasi, memperbarui firewall, dan memulai server, telah selesai. Klik Finish untuk menyelesaikan proses instalasi.
 ![Screenshot 2025-03-29 115441](https://github.com/user-attachments/assets/96cb9f32-9b26-4b7e-ac64-6cc3d39539bb)
 
---
+---
 
 - konfigurasi MySQL Server 8.0.41 telah selesai.
    - Pengguna dapat melanjutkan dengan mengklik Next untuk menyelesaikan proses instalasi.
 ![Screenshot 2025-03-29 111936](https://github.com/user-attachments/assets/02e69bf2-6120-4dbe-a41d-528611202740)
 
---
+---
 
 - Proses instalasi MySQL Server telah selesai.
    - Pengguna dapat menyalin log instalasi dengan mengklik Copy Log to Clipboard atau menutup installer dengan mengklik Finish.
 ![Screenshot 2025-03-29 111946](https://github.com/user-attachments/assets/4c911d0d-f7f8-4129-9685-818f026113e1)
 
---
+---
 
 - MySQL Installer setelah instalasi selesai. Tampilan ini menampilkan MySQL Server versi 8.0.41 (arsitektur X64) yang telah terpasang.
    - Pengguna dapat Reconfigure server, menambah, mengubah, memperbarui, atau menghapus instalasi MySQL melalui opsi di sebelah kanan.
 ![Screenshot 2025-03-29 112004](https://github.com/user-attachments/assets/b8d356c1-048f-48fe-bffc-1f30962ded9f)
 
---
+---
 
 - Hasil pencarian di Windows untuk MySQL 8.0 Command Line Client.
    - Pengguna dapat membuka aplikasi ini untuk mengakses MySQL melalui command line. Klik opsi seperti Run as administrator,
 ![image](https://github.com/user-attachments/assets/1f5cb059-43e7-4330-93cc-a0a2b67818e9)
 
---
+---
 
 - Tampilan MySQL 8.0 Command Line Client yang meminta pengguna untuk memasukkan password.
    - Password ini adalah yang telah dibuat saat instalasi MySQL. Jika benar, pengguna akan masuk ke MySQL shell untuk menjalankan perintah SQL.
 ![Screenshot 2025-03-29 112403](https://github.com/user-attachments/assets/29763eb1-3e72-466c-aa2a-e37098d07d8b)
 
---
+---
 
 - MySQL telah berhasil diinstal dan pengguna berhasil masuk ke MySQL monitor setelah memasukkan password.
 ![Screenshot 2025-03-29 112413](https://github.com/user-attachments/assets/e1ab843d-818d-4926-9a84-247e101dd371)
 
----
+----
 
 **5. Lakukan perubahan perubahan pada variable berikut (dokumentasikan before dan after nya)**
 - a. port dari default 3306 menjadi 3309.
   - Ketik perintah SHOW VARIABLES LIKE ‘port’; di command prompt mysql untuk mengecek port yang sedang digunakan lalu tekan enter dan hasilnya akan menunjukkan port saat ini default 3306. Lalu tutup mysql dengan perintah EXIT; dan enter
 ![Screenshot 2025-03-29 112518](https://github.com/user-attachments/assets/a1d35afd-cf43-404a-9525-1402bf7fc04f)
 
---
+---
 
 - Mengedit file konfigurasi my.ini untuk mengubah port MySQL dari 3306 ke 3309 menggunakan vscode.
    - Pastikan Anda menyimpan file my.ini setelah mengeditnya.
 ![Screenshot 2025-03-29 113706](https://github.com/user-attachments/assets/6e0ad505-aac9-4bc6-acaa-89f8cfb10337)
 
---
+---
 
 - Membuka Command Prompt di Windows dengan klik Kanan "Run as administrator", ketik "net stop mysql80" dan "net start mysql80" 
 ![Screenshot 2025-03-29 113937](https://github.com/user-attachments/assets/34688b88-bca2-485d-8bed-49e8b20ed580)
 
---
+---
 
 - Sesudah port MySQL telah berhasil diubah menjadi 3309 
 ![image](https://github.com/user-attachments/assets/60ea2a0a-170f-4dbb-9893-f7f5092c39ea)
 
---
+---
 
 - Membuka Command Prompt di Windows. Jika Anda ingin menjalankan perintah dengan hak administrator, pilih "Run as administrator" agar memiliki izin penuh untuk mengelola sistem, termasuk mengubah layanan seperti MySQL.
 ![Screenshot 2025-03-29 114012](https://github.com/user-attachments/assets/9e0476a3-2800-48ea-b519-e778da349799)
 
---
+---
 
 - b. innodb_buffer_pool_size dr default 16M (menjadi 25% dari RAM )
    - Cek size RAM Fisik yaitu 16,108 MB (sekitar 16GB) dengan perintah dibawah ini.
 ![Screenshot 2025-03-29 120612](https://github.com/user-attachments/assets/00efa91f-1872-4da3-967b-569d7e4c8770)
 
---
+---
 
 - Buka File "C:\ProgramData\MySQL\MySQL Server 8.0\my.ini" dan rubah innodb_buffer_pool_size menjadi 25% dari RAM, yang awalnya 128M menjadi 3G dari 16GB .
 ![image](https://github.com/user-attachments/assets/d862dd6f-e033-4509-9585-8c655235efa6)
 
---
+---
 
 - Cek nilai innodb_buffer_pool_size adalah 3221225472 byte, yang setara dengan 3 MB.
 ![ChatGPT Image Mar 29, 2025, 02_17_05 PM](https://github.com/user-attachments/assets/547eb80a-bb6e-4912-a800-8fcad42faed0)
 
---
+---
 
 - Perintah mengubah kata sandi pengguna `root` di MySQL menjadi **"sherli"**. Gantilah dengan kata sandi yang lebih aman.
 ![image](https://github.com/user-attachments/assets/30fc65a1-bb77-4506-867a-c168078d5b11)
