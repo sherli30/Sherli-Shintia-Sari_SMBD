@@ -653,6 +653,24 @@ SELECT * FROM tr_penjualan_partisi WHERE kode_cabang = 'CAB001';
 - Jika query sering menggunakan filter di luar kolom partisi, pertimbangkan untuk menambahkan indeks tambahan atau menghindari partisi yang tidak diperlukan.
 
 ---
+# PEMBAHASAN
+
+**Tujuan Utama:**
+- Meningkatkan kecepatan query dengan hanya memindai partisi yang relevan.
+- Mempermudah manajemen data, seperti penghapusan atau arsip data lama.
+- Mempercepat proses backup dan restore.
+
+**Jenis Partisi:**
+- RANGE: Cocok untuk data dengan rentang nilai, seperti tanggal.
+- LIST: Cocok untuk data dengan kategori diskrit, seperti kode wilayah.
+
+**Pertimbangan Penting:**
+- Pemilihan kunci partisi yang tepat sesuai pola akses data.
+- Keseimbangan antara jumlah partisi dan overhead manajemen.
+- Penggunaan indeks yang tepat pada setiap partisi.
+- Pengujian menyeluruh sebelum implementasi.
+
+---
 
 # KESIMPULAN SECARA KESELURUHAN
 Partisi tabel merupakan teknik optimasi database yang membagi tabel besar menjadi segmen-segmen lebih kecil berdasarkan kriteria tertentu. Dari hasil studi kasus pada database minimarket, diperoleh kesimpulan sebagai berikut:
