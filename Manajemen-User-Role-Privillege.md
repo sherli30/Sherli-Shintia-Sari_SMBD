@@ -157,31 +157,53 @@ CREATE ROLE 'role_chalimatus_insert_select';
 GRANT SELECT, INSERT ON database_example.* TO 'role_chalimatus_insert_select';
 ```
 
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/e995a9e0-8c66-4160-a6bf-41a78c1fa657)
 
 ----
+
 5. 
 ![image](https://github.com/user-attachments/assets/ee8b0aed-977a-4e01-83f4-1e3cb67137ef)
--	Membuat role bernama role_chalimatus_create_drop.
--	Code : CREATE ROLE 'role_chalimatus_create_drop'; dengan output sebagai berikut:
+
+# Membuat role bernama role_chalimatus_create_drop.
+
+**> Query :**
+```
+CREATE ROLE 'role_chalimatus_create_drop'; dengan output sebagai berikut:
+```
+
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/6fc2e121-a620-41c1-b420-9a77ab25fc1b)
 
 ----
 
 6.	privilege create, drop kedalam role diatas
--	Memberikan izin CREATE dan DROP pada seluruh tabel di database_example untuk role role_chalimatus_create_drop.
--	Code : GRANT CREATE, DROP ON database_example.* TO 'role_chalimatus_create_drop'; dengan output sebagai berikut:
+   
+# Memberikan izin CREATE dan DROP pada seluruh tabel di database_example untuk role role_chalimatus_create_drop.
+
+**> Query :**
+```
+GRANT CREATE, DROP ON database_example.* TO 'role_chalimatus_create_drop';
+```
+
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/1687e662-02fa-4b28-bff7-5c132bc7d5a5)
 
 ----
 
 7.	Berikan 2 user kedalam masing-masing role diatas
--	Memberikan role role_chalimatus_insert_select kepada chalimatus dan safira.
+#	Memberikan role role_chalimatus_insert_select kepada chalimatus dan safira.
  
--	Memberikan role role_chalimatus_create_drop kepada safira dan sherli.
+
 -	Code : GRANT 'role_chalimatus_insert_select' TO 'chalimatus'@'localhost', 'safira'@'localhost'; ; dengan output sebagai berikut:
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
 
