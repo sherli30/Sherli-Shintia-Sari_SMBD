@@ -203,61 +203,120 @@ GRANT CREATE, DROP ON database_example.* TO 'role_chalimatus_create_drop';
 7.	Berikan 2 user kedalam masing-masing role diatas
 #	Memberikan role role_chalimatus_insert_select kepada chalimatus dan safira.
  
+**> Query :**
+```
+GRANT 'role_chalimatus_insert_select' TO 'chalimatus'@'localhost', 'safira'@'localhost';
+```
 
--	Code : GRANT 'role_chalimatus_insert_select' TO 'chalimatus'@'localhost', 'safira'@'localhost'; ; dengan output sebagai berikut:
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
 
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/944e0893-3e6e-41bb-b3d0-2b68837bca1a)
 
 ----
 
--	Mengecek kembali daftar user yang memiliki hak akses tertentu.
--	Code : SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli');
+# Mengecek kembali daftar user yang memiliki hak akses tertentu.
+
+**> Query :**
+```
+SELECT USER, HOST FROM mysql.user WHERE USER IN ('chalimatus', 'safira', 'sherli');
+```
+
+**> Penjelasan :**
 -	Output menghasilkan 3 users dengan host yaitu localhost
+
+**> Hasil :**
  ![image](https://github.com/user-attachments/assets/0c979500-43b3-447f-8260-9f783a129b0f)
 
 ----
 
 8.	Proses pengujian sebelum dan sesudah user diberikan role dengan menggunakan
--	Menampilkan daftar hak akses (privilege) yang dimiliki oleh user chalimatus dan safira.
--	Code : SHOW GRANTS FOR 'chalimatus'@'localhost'; dengan outptu sebagai berikut:
+#	Menampilkan daftar hak akses (privilege) yang dimiliki oleh user chalimatus dan safira.
+
+**> Query :**
+```
+SHOW GRANTS FOR 'chalimatus'@'localhost';
+```
+
+**> Penjelasan :**
 -	Output dari rants for chalimatus@localhost yaitu grant yang di select ke tujuan user dari localhost
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/65fd2c34-153b-4706-bbd8-328f113cd955)
 
 ----
 
--	SHOW GRANTS FOR 'safira'@'localhost'; dengan output sebagai berikut:
+**> Query :**
+```
+SHOW GRANTS FOR 'safira'@'localhost';
+```
+
+**> Penjelasan :**
 -	Menampilkan hak akses user setellah role di terapkan, dengan code: SHOW GRANTS FOR 'safira'@'localhkst;
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/4fe11b77-6ed8-4d87-a30d-10280d98dead)
 
 ----
--	Mengaktifkan peran yang telah diberikan untuk sesi pengguna saat ini.
--	Code : SET ROLE 'role_chalimatus_insert_select'; sdengan output sebagai berikut:
+# Mengaktifkan peran yang telah diberikan untuk sesi pengguna saat ini.
+
+**> Query :**
+```
+SET ROLE 'role_chalimatus_insert_select';
+```
+
+**> Penjelasan :**
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/b8fe6235-e59e-4dfd-a88d-541481ca28db)
 
 ----
 
--	SET ROLE 'role_chalimatus_create_drop'; dengan output sebaga berikut:
+**> Query :**
+```
+SET ROLE 'role_chalimatus_create_drop';
+```
+
+**> Penjelasan :**
+
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/c86cc427-a578-449f-87f5-fff5747913ce)
 
 ----
 
--	Menampilkan kembali hak akses user setelah role diterapkan.
--	Code : SHOW GRANTS FOR 'chalimatus'@'localhost'; dengan output sebaga berikut:
+# Menampilkan kembali hak akses user setelah role diterapkan.
+
+**> Query :**
+```
+SHOW GRANTS FOR 'chalimatus'@'localhost';
+```
+
+**> Penjelasan :**
 -	Output dari rants for chalimatus@localhost yaitu grant yang di select ke tujuan user dari localhost
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/e3affb98-5413-4d15-a0fe-f7ee85e56d4f)
 
 ----
--	SHOW GRANTS FOR 'safira'@'localhost'; dengan output sebaga berikut:
+
+```
+SHOW GRANTS FOR 'safira'@'localhost';
+```
+
+**> Penjelasan :**
 -	Output dari rants for safira@localhost yaitu grant yang di select ke tujuan user dari localhost
+
+**> Hasil :**
 ![image](https://github.com/user-attachments/assets/483491c8-70c2-47e0-95d1-b50e74373f3d)
 
 ----
 
 9.	Lepas role dari user diatas. Sehingga user menjadi tidak memiliki role.
  
--	Menghapus role role_chalimatus_insert_select dari chalimatus dan safira.
+Menghapus role role_chalimatus_insert_select dari chalimatus dan safira.
 -	Menghapus role role_chalimatus_create_drop dari safira dan sherli.
 -	Code : REVOKE 'role_chalimatus_create_drop' FROM 'safira'@'localhost', 'sherli'@'localhost';
 -	Hasil run yaitu 1 querie, 1 succes tanpa adanya error
