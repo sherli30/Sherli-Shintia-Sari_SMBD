@@ -1,4 +1,4 @@
-# MANAJEMEN USER DAN ROLE
+# MANAJEMEN USER, ROLE, DAN PRIVILLEGE
 
 # LATAR BELAKANG PEMBAHASAN 
 Dalam sistem basis data, manajemen user, role, dan privilege memiliki peran yang sangat penting dalam menjaga keamanan, integritas, dan keteraturan akses terhadap data. Setiap pengguna yang terhubung dengan basis data harus diatur hak aksesnya agar hanya bisa melakukan operasi sesuai kebutuhan dan tanggung jawabnya. Oleh karena itu, dibutuhkan mekanisme yang baik dalam membuat, mengelola, serta mengawasi pengguna, role, dan privilege.
