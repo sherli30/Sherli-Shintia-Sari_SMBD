@@ -37,6 +37,7 @@ Query ini mengambil semua data dari tabel transactions dengan transaksi yang ter
 **> Hasil :**  
 
 ![image](https://github.com/user-attachments/assets/55703353-d1de-493b-8a61-4f89297bbc3d)
+
 Karena tidak ada partisi, MySQL harus memeriksa seluruh tabel, yang bisa sangat lambat.
 
 ---
@@ -134,7 +135,7 @@ Query ini mengambil semua transaksi dari tabel `transactions` yang terjadi dalam
 
 **> Hasil :**
 
-> MySQL hanya akan mencari di partisi p3 (data tahun 2023), bukan seluruh tabel, sehingga query menjadi jauh lebih cepat.
+MySQL hanya akan mencari di partisi p3 (data tahun 2023), bukan seluruh tabel, sehingga query menjadi jauh lebih cepat.
 
 ![image](https://github.com/user-attachments/assets/03792672-25c5-4bcd-8d52-8229edfaf38f)
 
